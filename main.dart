@@ -313,7 +313,6 @@ class _AnaSayfaState extends State<AnaSayfa> {
         final kalanSure = sayac.tarihSaat.difference(DateTime.now());
         final dateFormat = DateFormat('dd/MM/yyyy');
 
-        // Kalan süreyi gün, saat, dakika olarak hesapla
         final gunler = kalanSure.inDays;
         final saatler = kalanSure.inHours % 24;
         final dakikalar = kalanSure.inMinutes % 60;
@@ -347,22 +346,22 @@ class _AnaSayfaState extends State<AnaSayfa> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 8),
+                  Row(
+                    children: [
+                      _buildTimeUnit(gunler, 'gün'),
+                      SizedBox(width: 12),
+                      _buildTimeUnit(saatler, 'saat'),
+                      SizedBox(width: 12),
+                      _buildTimeUnit(dakikalar, 'dakika'),
+                    ],
+                  ),
+                  SizedBox(height: 8),
                   Text(
                     dateFormat.format(sayac.tarihSaat),
                     style: TextStyle(
                       color: Colors.white70,
-                      fontSize: 14,
+                      fontSize: 12,
                     ),
-                  ),
-                  SizedBox(height: 4),
-                  Row(
-                    children: [
-                      _buildTimeUnit(gunler, 'gün'),
-                      SizedBox(width: 8),
-                      _buildTimeUnit(saatler, 'saat'),
-                      SizedBox(width: 8),
-                      _buildTimeUnit(dakikalar, 'dakika'),
-                    ],
                   ),
                 ],
               ),
@@ -384,7 +383,7 @@ class _AnaSayfaState extends State<AnaSayfa> {
           '$value',
           style: TextStyle(
             color: Colors.white,
-            fontSize: 16,
+            fontSize: 25,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -393,7 +392,7 @@ class _AnaSayfaState extends State<AnaSayfa> {
           unit,
           style: TextStyle(
             color: Colors.white70,
-            fontSize: 14,
+            fontSize: 23,
             fontWeight: FontWeight.w400,
           ),
         ),
@@ -502,7 +501,7 @@ class _SayacEklemeSayfasiState extends State<SayacEklemeSayfasi> {
       kategori: _selectedKategori!,
       flatColor: _selectedFlatColor,
       gradientColors: _selectedGradient,
-      not: _notController.text.isEmpty ? null : _notController.text,
+      not: _notController.text,
       categoryIcon: categoryIcon,
     );
 

@@ -313,6 +313,11 @@ class _AnaSayfaState extends State<AnaSayfa> {
         final kalanSure = sayac.tarihSaat.difference(DateTime.now());
         final dateFormat = DateFormat('dd/MM/yyyy');
 
+        // Kalan süreyi gün, saat, dakika olarak hesapla
+        final gunler = kalanSure.inDays;
+        final saatler = kalanSure.inHours % 24;
+        final dakikalar = kalanSure.inMinutes % 60;
+
         return Card(
           margin: EdgeInsets.symmetric(vertical: 8),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -344,11 +349,20 @@ class _AnaSayfaState extends State<AnaSayfa> {
                   SizedBox(height: 8),
                   Text(
                     dateFormat.format(sayac.tarihSaat),
-                    style: TextStyle(color: Colors.white70),
+                    style: TextStyle(
+                      color: Colors.white70,
+                      fontSize: 14,
+                    ),
                   ),
-                  Text(
-                    "Kalan: ${kalanSure.inDays} gün ${kalanSure.inHours % 24} saat",
-                    style: TextStyle(color: Colors.white),
+                  SizedBox(height: 4),
+                  Row(
+                    children: [
+                      _buildTimeUnit(gunler, 'gün'),
+                      SizedBox(width: 8),
+                      _buildTimeUnit(saatler, 'saat'),
+                      SizedBox(width: 8),
+                      _buildTimeUnit(dakikalar, 'dakika'),
+                    ],
                   ),
                 ],
               ),
@@ -360,6 +374,30 @@ class _AnaSayfaState extends State<AnaSayfa> {
           ),
         );
       },
+    );
+  }
+
+  Widget _buildTimeUnit(int value, String unit) {
+    return Row(
+      children: [
+        Text(
+          '$value',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(width: 4),
+        Text(
+          unit,
+          style: TextStyle(
+            color: Colors.white70,
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+      ],
     );
   }
 }
